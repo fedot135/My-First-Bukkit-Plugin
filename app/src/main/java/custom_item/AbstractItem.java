@@ -1,0 +1,81 @@
+package custom_item;
+
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.block.Action;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
+
+public abstract class AbstractItem {
+
+    private ItemStack itemStack = new ItemStack(Material.STICK,1);
+    private String name = "Custom Item";
+
+    private static final ItemList itemList = new ItemList();
+
+    public static final NamespacedKey ITEM_KEY = new NamespacedKey("custom", "item_key");
+
+    protected AbstractItem(String name) {
+
+        this.name = name;
+        itemList.updateAbstractItem(this, name);
+        
+        itemStack.editPersistentDataContainer(pdc -> {pdc.set(ITEM_KEY, PersistentDataType.STRING, name);});
+
+    }
+
+
+    public static void registerItem(AbstractItem item) {
+        if (item.getName() != null) {
+            itemList.updateAbstractItem(item, item.getName());
+        }
+    }
+
+    public static AbstractItem getAbstItemFromList(String name) {
+        return itemList.get(name);
+    }
+
+    public static AbstractItem getAbstItemFromItemStack(ItemStack item) {
+        if (item != null) {
+
+            String name = (String) item.getPersistentDataContainer().get(AbstractItem.ITEM_KEY, PersistentDataType.STRING);
+
+            if (name != null) {
+                return AbstractItem.getAbstItemFromList(name);
+            } else {
+                return null;
+            }
+            
+        } else {
+            return null;
+        }
+    }
+
+    public void updateItemStack(ItemStack newItemStack) {
+
+        if (newItemStack != null) {
+            itemStack = newItemStack;
+            itemStack.editPersistentDataContainer(pdc -> {pdc.set(ITEM_KEY, PersistentDataType.STRING, name);});
+        }
+
+    }
+
+    public ItemStack getItemStack() {
+        return itemStack;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void giveItem(Player player) {
+        player.give(itemStack);
+    }
+
+    protected abstract void used(Action action, Player player);
+
+    protected abstract void attack(Player player, Entity entity);
+
+}
