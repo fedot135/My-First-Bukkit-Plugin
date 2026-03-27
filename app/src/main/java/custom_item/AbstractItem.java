@@ -4,7 +4,6 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -66,8 +65,6 @@ public abstract class AbstractItem {
     public void giveItem(Player player) {
         player.give(itemStack);
     }
-
-    protected abstract void used(Action action, Player player);
 
     protected abstract void attack(Player player, Entity entity);
 

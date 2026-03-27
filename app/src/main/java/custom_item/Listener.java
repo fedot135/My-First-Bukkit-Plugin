@@ -7,22 +7,28 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import io.papermc.paper.event.player.PrePlayerAttackEntityEvent;
 
-
 public class Listener implements org.bukkit.event.Listener {
 
     @EventHandler
-    public void EntityItemUse(PlayerInteractEvent event) {
+    public void entityItemUse(PlayerInteractEvent event) {
 
-        AbstractItem item = AbstractItem.getFromItemStack(event.getItem());
+        Useable item = (Useable) AbstractItem.getFromItemStack(event.getItem());
+
         if (item != null) {
-            item.used(event.getAction(), event.getPlayer());
+
+            if (event.getAction().isLeftClick()) {
+                item.leftClick(event.getPlayer());
+            } else {
+                item.rightClick(event.getPlayer());
+            }
+
         }
         
     }
 
 
     @EventHandler
-    public void plrAttackEntityEvent(PrePlayerAttackEntityEvent event) {
+    public void prePlayerAttackEntityEvent(PrePlayerAttackEntityEvent event) {
 
         AbstractItem item = AbstractItem.getFromItemStack(event.getPlayer().getActiveItem());
         if (item != null) {
@@ -32,7 +38,7 @@ public class Listener implements org.bukkit.event.Listener {
     }
 
     @EventHandler
-    public void plrDroppedItem(PlayerDropItemEvent event) {
+    public void plrDroppedItemEvent(PlayerDropItemEvent event) {
 
         AbstractItem item = AbstractItem.getFromItemStack(event.getItemDrop().getItemStack());
         if (item != null) {
@@ -46,4 +52,5 @@ public class Listener implements org.bukkit.event.Listener {
     public void PlayerJoined(PlayerJoinEvent event) {
         AbstractItem.getFromList("Fire Sword").giveItem(event.getPlayer());
     }
+    
 }
