@@ -1,11 +1,12 @@
 package custom_item;
 
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-
-import io.papermc.paper.event.player.PrePlayerAttackEntityEvent;
 
 public class Listener implements org.bukkit.event.Listener {
 
@@ -28,11 +29,17 @@ public class Listener implements org.bukkit.event.Listener {
 
 
     @EventHandler
-    public void prePlayerAttackEntityEvent(PrePlayerAttackEntityEvent event) {
+    public void prePlayerAttackEntityEvent(EntityDamageByEntityEvent event) {
 
-        AbstractItem item = AbstractItem.getFromItemStack(event.getPlayer().getActiveItem());
-        if (item != null) {
-            item.attack(event.getPlayer(), event.getAttacked());
+        if (event.getDamager() instanceof Player) {
+
+            Player plr = (Player) event.getDamager();
+            AbstractItem item = AbstractItem.getFromItemStack(plr.getActiveItem());
+
+            if (item != null) {
+                item.attack(plr, event.getEntity());
+            }
+
         }
 
     }
@@ -52,5 +59,5 @@ public class Listener implements org.bukkit.event.Listener {
     public void PlayerJoined(PlayerJoinEvent event) {
         AbstractItem.getFromList("Fire Sword").giveItem(event.getPlayer());
     }
-    
+
 }
