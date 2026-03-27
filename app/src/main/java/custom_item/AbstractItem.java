@@ -28,26 +28,19 @@ public abstract class AbstractItem {
 
 
     public static void registerItem(AbstractItem item) {
-        if (item.getName() != null) {
+        if (item != null && item.getName() != null) {
             itemList.updateAbstractItem(item, item.getName());
         }
     }
 
-    public static AbstractItem getAbstItemFromList(String name) {
+    public static AbstractItem getFromList(String name) {
         return itemList.get(name);
     }
 
-    public static AbstractItem getAbstItemFromItemStack(ItemStack item) {
+    public static AbstractItem getFromItemStack(ItemStack item) {
         if (item != null) {
-
             String name = (String) item.getPersistentDataContainer().get(AbstractItem.ITEM_KEY, PersistentDataType.STRING);
-
-            if (name != null) {
-                return AbstractItem.getAbstItemFromList(name);
-            } else {
-                return null;
-            }
-            
+            return (name != null) ? AbstractItem.getFromList(name) : null;
         } else {
             return null;
         }
@@ -77,5 +70,7 @@ public abstract class AbstractItem {
     protected abstract void used(Action action, Player player);
 
     protected abstract void attack(Player player, Entity entity);
+
+    protected abstract void dropped(Player player);
 
 }
