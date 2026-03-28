@@ -9,7 +9,8 @@ import org.bukkit.persistence.PersistentDataType;
 
 public abstract class AbstractItem {
 
-    private ItemStack itemStack = new ItemStack(Material.STICK,1);
+    private ItemStack itemStack = new ItemStack(Material.STICK);
+    public ItemStack tempItemStack = new ItemStack(Material.STICK);
     private String name = "Custom Item";
 
     private static final ItemList itemList = new ItemList();
@@ -66,8 +67,8 @@ public abstract class AbstractItem {
         player.give(itemStack);
     }
 
-    protected abstract void attack(Player player, Entity entity);
+    public abstract void dropped(Player player);
 
-    protected abstract void dropped(Player player);
+    public abstract void attack(Player damager, Entity target);
 
 }

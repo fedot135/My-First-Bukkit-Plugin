@@ -1,9 +1,12 @@
 package plugin_items;
 
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import custom_item.AbstractItem;
 import custom_item.Useable;
+import net.kyori.adventure.text.Component;
 
 public class FireSword extends AbstractItem implements Useable {
 
@@ -12,18 +15,28 @@ public class FireSword extends AbstractItem implements Useable {
     }
 
     @Override
-    public void rightClick(Player player) {
-        for (Entity entity : player.getNearbyEntities(10, 2, 10)) {
-            entity.setFireTicks(20);
+    public void rightClick(Player player, ItemStack item) {
+
+        if (player.getCooldown(item) == 0) {
+            for (Entity entity : player.getNearbyEntities(10, 2, 10)) {
+                if (entity.getType() != EntityType.ITEM) {
+                    entity.setFireTicks(20);
+                }
+            }
+            player.setCooldown(item, 100);
+        } else {
+            player.sendActionBar(Component.text("cooldown!"));
         }
+
     }
 
     @Override
-    protected void attack(Player player, Entity entity) {
-        entity.setFireTicks(200);
+    public void dropped(Player player) {
     }
 
     @Override
-    protected void dropped(Player player) {}
+    public void attack(Player damager, Entity target) {
+        target.setFireTicks(200);
+    }
 
 }

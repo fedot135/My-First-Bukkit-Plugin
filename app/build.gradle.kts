@@ -24,14 +24,9 @@ tasks.getByName<Jar>("jar") {
     destinationDirectory.set(file("C:\\Users\\nekit\\Desktop\\paper server\\plugins"))
 }
 
+
 dependencies {
-
-    implementation("org.slf4j:slf4j-nop:2.0.7")
-
     compileOnly("io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT")
-
-    implementation("org.xerial:sqlite-jdbc:3.45.1.0")
-    implementation("com.google.code.gson:gson:2.13.2")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
