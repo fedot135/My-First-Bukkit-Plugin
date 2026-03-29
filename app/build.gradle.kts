@@ -19,10 +19,11 @@ repositories {
     }
 
 }
-
+/*
 tasks.getByName<Jar>("jar") {
     destinationDirectory.set(file("C:\\Users\\nekit\\Desktop\\paper server\\plugins"))
 }
+*/
 
 
 dependencies {
