@@ -12,26 +12,21 @@ import org.bukkit.inventory.ItemStack;
 public class Listener implements org.bukkit.event.Listener {
 
     @EventHandler
-    public void entityItemUse(PlayerInteractEvent event) {
+    public void entityItemUseEvent(PlayerInteractEvent event) {
 
-        Useable item = null;
-
-        {
-            ItemStack itemStack = event.getItem();
-            AbstractItem abstItem = AbstractItem.getFromItemStack(itemStack);
-
-            if (abstItem != null) {
-                abstItem.tempItemStack = itemStack;
-                item = (Useable) abstItem;
-            }
-        }
+        ItemStack itemStack = event.getItem();
+        AbstractItem abstItem = AbstractItem.getFromItemStack(itemStack);
+        Useable item = (abstItem != null) ? (Useable) abstItem : null;
 
         if (item != null) {
 
+            abstItem.tempItemStack = itemStack;
+            Player player = event.getPlayer();
+
             if (event.getAction().isLeftClick()) {
-                item.leftClick(event.getPlayer(), event.getItem());
+                item.leftClick(player, itemStack);
             } else {
-                item.rightClick(event.getPlayer(), event.getItem());
+                item.rightClick(player, itemStack);
             }
 
         } else {
@@ -52,25 +47,19 @@ public class Listener implements org.bukkit.event.Listener {
     }
 
     @EventHandler
-    public void entityDamagedByEntity(EntityDamageEvent event) {
+    public void entityDamageEvent(EntityDamageEvent event) {
 
-        Player plr = null;
-
-        {
-            Entity damager = event.getDamageSource().getCausingEntity();
-            plr = (damager instanceof Player) ? (Player) damager : null;
-        }
+        Entity damager = event.getDamageSource().getDirectEntity();
+        Player plr = damager != null && damager instanceof Player ? (Player) damager : null;
 
         if (plr != null) {
+            ItemStack activeItem = plr.getInventory().getItemInMainHand();
+            AbstractItem abstItem = AbstractItem.getFromItemStack(activeItem);
 
-            ItemStack itemStack = plr.getActiveItem();
-            AbstractItem item = AbstractItem.getFromItemStack(itemStack);
-
-            if (item != null) {
-                item.tempItemStack = itemStack;
-                item.attack(plr, event.getEntity());
+            if (abstItem != null) {
+                abstItem.tempItemStack = activeItem;
+                abstItem.attack(plr, event.getEntity());
             }
-
         }
     }
 

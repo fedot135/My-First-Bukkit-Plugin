@@ -37,6 +37,7 @@ public class FireSword extends AbstractItem implements Useable {
     @Override
     public void attack(Player damager, Entity target) {
         target.setFireTicks(200);
+        damager.sendActionBar(Component.text("Attack"));
     }
 
 }
