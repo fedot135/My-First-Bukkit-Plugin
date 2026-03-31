@@ -17,9 +17,9 @@ public class ExamplePlugin extends JavaPlugin {
   public void onEnable() {
 
     System.out.println("Плагин был загружен!");
-    
-    registerCommand("giveitem", new GiveItemCommand());
+
     AbstractItem.registerItem(new FireSword());
+    registerCommand("giveitem", new GiveItemCommand());
     Bukkit.getPluginManager().registerEvents(new Listener(), this);
 
   }

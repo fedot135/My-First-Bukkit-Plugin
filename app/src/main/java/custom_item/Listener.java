@@ -6,7 +6,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class Listener implements org.bukkit.event.Listener {
@@ -62,11 +61,4 @@ public class Listener implements org.bukkit.event.Listener {
             }
         }
     }
-
-
-    @EventHandler
-    public void PlayerJoined(PlayerJoinEvent event) {
-        AbstractItem.getFromList("Fire Sword").giveItem(event.getPlayer());
-    }
-
 }
