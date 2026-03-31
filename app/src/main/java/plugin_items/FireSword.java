@@ -11,7 +11,7 @@ import net.kyori.adventure.text.Component;
 public class FireSword extends AbstractItem implements Useable {
 
     public FireSword() {
-        super("Fire Sword");
+        super("FireSword");
     }
 
     @Override
@@ -24,8 +24,6 @@ public class FireSword extends AbstractItem implements Useable {
                 }
             }
             player.setCooldown(item, 100);
-        } else {
-            player.sendActionBar(Component.text("cooldown!"));
         }
 
     }

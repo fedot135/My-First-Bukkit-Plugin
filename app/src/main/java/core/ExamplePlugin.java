@@ -4,6 +4,7 @@
 package core;
 
 import custom_item.AbstractItem;
+import custom_item.GiveItemCommand;
 import custom_item.Listener;
 import plugin_items.FireSword;
 import org.bukkit.Bukkit;
@@ -16,7 +17,8 @@ public class ExamplePlugin extends JavaPlugin {
   public void onEnable() {
 
     System.out.println("Плагин был загружен!");
-
+    
+    registerCommand("giveitem", new GiveItemCommand());
     AbstractItem.registerItem(new FireSword());
     Bukkit.getPluginManager().registerEvents(new Listener(), this);
 

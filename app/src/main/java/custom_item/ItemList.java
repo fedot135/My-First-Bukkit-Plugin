@@ -1,33 +1,38 @@
 package custom_item;
+
 import java.util.HashMap;
 
 public class ItemList {
 
-    private HashMap<String, AbstractItem> List = new HashMap<String, AbstractItem>();
+    private HashMap<String, AbstractItem> list = new HashMap<String, AbstractItem>();
 
     public void updateAbstractItem(AbstractItem item, String name) {
 
-        if (List.get(name) == null) {
-            List.put(name, item);
+        if (list.get(name) == null) {
+            list.put(name, item);
         } else {
-            List.replace(name, item);
+            list.replace(name, item);
         }
 
     }
 
     public void updateName(String name) {
 
-        AbstractItem saveItem = List.get(name);
+        AbstractItem saveItem = list.get(name);
         
         if (saveItem != null) {
-            List.remove(name);
-            List.put(name, saveItem);
+            list.remove(name);
+            list.put(name, saveItem);
         }
 
     }
 
-    public AbstractItem get(String name) {
-        return List.get(name);
+    public AbstractItem getItem(String name) {
+        return list.get(name);
+    }
+
+    public HashMap<String, AbstractItem> getHashMap() {
+        return list;
     }
     
 }

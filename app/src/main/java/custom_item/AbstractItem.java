@@ -34,7 +34,11 @@ public abstract class AbstractItem {
     }
 
     public static AbstractItem getFromList(String name) {
-        return itemList.get(name);
+        return itemList.getItem(name);
+    }
+
+    public static ItemList getItemList() {
+        return itemList;
     }
 
     public static AbstractItem getFromItemStack(ItemStack item) {
